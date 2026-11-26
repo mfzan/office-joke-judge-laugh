@@ -13,10 +13,12 @@ The grader runs this file as `python3 main.py` and collects
 import os
 from pathlib import Path
 
-# One office-life joke, one line, under 200 characters.
+# One office-life joke, one line, under 200 characters. The kicker lands
+# the twist: the disaster has already happened, so the fear is justified.
 ENTRY = (
     "The most feared person in the office isn't the boss "
-    "\u2014 it's the intern who just discovered Reply All."
+    "\u2014 it's the intern who just discovered Reply All "
+    "and already hit Send."
 )
 
 
@@ -34,6 +36,8 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     entry_path = out_dir / "entry.txt"
+    if len(ENTRY) >= 200 or "\n" in ENTRY:
+        raise ValueError(f"entry must be one line under 200 chars, got {len(ENTRY)}")
     entry_path.write_text(ENTRY, encoding="utf-8")
     os.chmod(entry_path, 0o644)
 
